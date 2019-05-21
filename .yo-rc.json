@@ -1,0 +1,42 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "gitCompany": "",
+    "baseName": "accountancy",
+    "packageName": "pl.gpiwosz.accountancy",
+    "packageFolder": "pl/gpiwosz/accountancy",
+    "serverPort": 8080,
+    "serviceDiscoveryType": false,
+    "authenticationType": "jwt",
+    "uaaBaseName": "../uaa",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "enableSwaggerCodegen": false,
+    "messageBroker": false,
+    "buildTool": "maven",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "enableTranslation": false,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "clientFramework": "react",
+    "jhiPrefix": "jhi",
+    "jhipsterVersion": "6.0.1",
+    "jwtSecretKey": "OTdjZTYyNGViZDg1ZjNkZTM3OGFmODNhODk2NTdjYzBjYzBhZjA1OTA4NWViYzdhYjUxZmFiZjAxZGIzODA0M2M4NzYxMDMwMzZmNDE0MTViOTQwZWE5ZDIyMGRjNTUyYjg4MWRkNjU2YTNjZTAzOWQxNGQwOWU4MWU5OTkwYmM=",
+    "clientTheme": "none",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": []
+  },
+  "git-provider": "GitHub",
+  "git-company": "LaYatiX",
+  "repository-name": "accountancy-app"
+}

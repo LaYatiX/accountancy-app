@@ -43,6 +43,24 @@ public class CacheConfiguration {
             createCache(cm, pl.gpiwosz.accountancy.domain.User.class.getName());
             createCache(cm, pl.gpiwosz.accountancy.domain.Authority.class.getName());
             createCache(cm, pl.gpiwosz.accountancy.domain.User.class.getName() + ".authorities");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Invoice.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.Invoice.class.getName() + ".products");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Content.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.MonthSumUp.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.MonthSumUp.class.getName() + ".expenses");
+            createCache(cm, pl.gpiwosz.accountancy.domain.MonthSumUp.class.getName() + ".incomes");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Expense.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.Expense.class.getName() + ".entries");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Income.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.Income.class.getName() + ".entries");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Entry.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.Company.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.Company.class.getName() + ".monthSumUps");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Company.class.getName() + ".senders");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Contractor.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.Contractor.class.getName() + ".receivers");
+            createCache(cm, pl.gpiwosz.accountancy.domain.Product.class.getName());
+            createCache(cm, pl.gpiwosz.accountancy.domain.Product.class.getName() + ".invoices");
             // jhipster-needle-ehcache-add-entry
         };
     }

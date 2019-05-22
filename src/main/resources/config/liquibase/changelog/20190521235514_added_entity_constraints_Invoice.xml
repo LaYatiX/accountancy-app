@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Invoice.
+    -->
+    <changeSet id="20190521235514-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="content_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_content_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="content"/>
+
+        <addForeignKeyConstraint baseColumnNames="invoice_id"
+                                 baseTableName="invoice_product"
+                                 constraintName="fk_invoice_product_invoice_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice"/>
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="invoice_product"
+                                 constraintName="fk_invoice_product_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+        
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_company_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company"/>
+
+        <addForeignKeyConstraint baseColumnNames="contractor_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_contractor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contractor"/>
+
+    </changeSet>
+</databaseChangeLog>

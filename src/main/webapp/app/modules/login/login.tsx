@@ -5,8 +5,9 @@ import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { IRootState } from 'app/shared/reducers';
 import { login } from 'app/shared/reducers/authentication';
 import LoginModal from './login-modal';
+import LoginContent from 'app/modules/login/login-content';
 
-export interface ILoginProps extends StateProps, DispatchProps, RouteComponentProps<{}> {}
+export interface ILoginProps extends StateProps, DispatchProps {}
 
 export interface ILoginState {
   showModal: boolean;
@@ -32,15 +33,11 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
   };
 
   render() {
-    const { location, isAuthenticated } = this.props;
-    const { from } = location.state || { from: { pathname: '/', search: location.search } };
-    const { showModal } = this.state;
+    const { isAuthenticated } = this.props;
     if (isAuthenticated) {
-      return <Redirect to={from} />;
+      return <Redirect to={'/'} />;
     }
-    return (
-      <LoginModal showModal={showModal} handleLogin={this.handleLogin} handleClose={this.handleClose} loginError={this.props.loginError} />
-    );
+    return <LoginContent handleLogin={this.handleLogin} loginError={this.props.loginError} />;
   }
 }
 

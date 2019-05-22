@@ -3,11 +3,15 @@ import { DropdownItem } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { Translate } from 'react-jhipster';
 
 export interface IMenuItem {
-  icon: IconProp;
-  to: string;
+  icon?: IconProp;
+  to?: string;
   id?: string;
+  toggleIcon?: any;
+  collapsed?: boolean;
 }
 
 export default class MenuItem extends React.Component<IMenuItem> {
@@ -15,9 +19,10 @@ export default class MenuItem extends React.Component<IMenuItem> {
     const { to, icon, id, children } = this.props;
 
     return (
-      <DropdownItem tag={Link} to={to} id={id}>
-        <FontAwesomeIcon icon={icon} fixedWidth /> {children}
-      </DropdownItem>
+      <Link to={to} id={id} className={'dropdown-item'}>
+        <FontAwesomeIcon icon={icon} className={'fa-sm fa-fw mr-2 text-gray-400'} />
+        {children}
+      </Link>
     );
   }
 }

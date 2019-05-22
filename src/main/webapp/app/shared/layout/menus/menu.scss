@@ -1,0 +1,24 @@
+.logo {
+  text-transform: none;
+  font-family: 'Nunito', serif;
+  font-size: 2em;
+
+  sup {
+    font-size: 40%;
+    top: -1.3em;
+    right: 0.1em;
+  }
+}
+
+.toggled {
+  .logo.logo-small {
+    display: block;
+  }
+}
+
+.logo.logo-small {
+  display: block;
+  @media (min-width: 786px) {
+    display: none;
+  }
+}

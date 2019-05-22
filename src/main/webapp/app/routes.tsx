@@ -45,4 +45,19 @@ const Routes = () => (
   </div>
 );
 
+export const AccountRoutes = () => (
+  <div className="view-routes">
+    <Switch>
+      <ErrorBoundaryRoute path="/" exact component={Login} />
+      <ErrorBoundaryRoute path="/login" component={Login} />
+      <ErrorBoundaryRoute path="/logout" component={Logout} />
+      <ErrorBoundaryRoute path="/register" component={Register} />
+      <ErrorBoundaryRoute path="/activate/:key?" component={Activate} />
+      <ErrorBoundaryRoute path="/reset/request" component={PasswordResetInit} />
+      <ErrorBoundaryRoute path="/reset/finish/:key?" component={PasswordResetFinish} />
+      {/*<ErrorBoundaryRoute component={PageNotFound} />*/}
+    </Switch>
+  </div>
+);
+
 export default Routes;

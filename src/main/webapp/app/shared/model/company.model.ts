@@ -27,5 +27,6 @@ export const defaultValue: Readonly<ICompany> = {
   zUSeasyStart: false,
   zUSmall: false,
   zUSdisease: false,
-  isZUSpayer: false
+  isZUSpayer: false,
+  id: 0
 };

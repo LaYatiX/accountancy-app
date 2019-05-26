@@ -40,7 +40,7 @@ const swaggerItem = (
 export const AdminMenu = ({ showSwagger }) => (
   <Dropdown as={NavItem} className={'no-arrow'} id="admin-menu">
     <Dropdown.Toggle id={'2'} className={'nav-link dropdown-toggle'} as={NavLinkDropdown}>
-      <span className="mr-2 d-none d-lg-inline text-gray-600 small">
+      <span className="mr-2 text-gray-600 small">
         <FontAwesomeIcon icon={faUserShield} />
         Admin
       </span>

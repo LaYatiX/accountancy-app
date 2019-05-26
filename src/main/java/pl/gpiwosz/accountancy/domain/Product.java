@@ -33,13 +33,13 @@ public class Product implements Serializable {
     @Column(name = "quantity")
     private Long quantity;
 
-    @Column(name = "price_netto")
+    @Column(name = "price_netto", precision=10, scale=2)
     private Float priceNetto;
 
     @Column(name = "v_at")
     private Long vAT;
 
-    @Column(name = "price_brutto")
+    @Column(name = "price_brutto", precision=10, scale=2)
     private Float priceBrutto;
 
     @ManyToMany(mappedBy = "products")

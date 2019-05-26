@@ -29,7 +29,6 @@ public class Invoice implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -48,13 +47,13 @@ public class Invoice implements Serializable {
     @Column(name = "bank_account")
     private String bankAccount;
 
-    @Column(name = "total_netto")
+    @Column(name = "total_netto", precision=10, scale=2)
     private Float totalNetto;
 
-    @Column(name = "total_vat")
+    @Column(name = "total_vat", precision=10, scale=2)
     private Float totalVat;
 
-    @Column(name = "total_brutto")
+    @Column(name = "total_brutto", precision=10, scale=2)
     private Float totalBrutto;
 
     @Column(name = "payment_type")
@@ -69,7 +68,6 @@ public class Invoice implements Serializable {
     @Column(name = "notes")
     private String notes;
 
-    @NotNull
     @Column(name = "jhi_size", nullable = false)
     private Long size;
 

@@ -60,7 +60,7 @@ public class MailServiceIT {
 
     @Test
     public void testSendEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
+        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false, null);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getSubject()).isEqualTo("testSubject");
@@ -73,7 +73,7 @@ public class MailServiceIT {
 
     @Test
     public void testSendHtmlEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, true);
+        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, true, null);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getSubject()).isEqualTo("testSubject");
@@ -86,7 +86,7 @@ public class MailServiceIT {
 
     @Test
     public void testSendMultipartEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, false);
+        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, false, null);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         MimeMultipart mp = (MimeMultipart) message.getContent();
@@ -103,7 +103,7 @@ public class MailServiceIT {
 
     @Test
     public void testSendMultipartHtmlEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, true);
+        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, true, null);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         MimeMultipart mp = (MimeMultipart) message.getContent();
@@ -124,7 +124,7 @@ public class MailServiceIT {
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         user.setLangKey("en");
-        mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
+        mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title", null);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getSubject()).isEqualTo("test title");
@@ -182,7 +182,7 @@ public class MailServiceIT {
     @Test
     public void testSendEmailWithException() throws Exception {
         doThrow(MailSendException.class).when(javaMailSender).send(any(MimeMessage.class));
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
+        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false, null);
     }
 
 }

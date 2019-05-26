@@ -15,6 +15,7 @@ import { IContent } from 'app/shared/model/content.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { Loading } from 'app/shared/layout/styled-components/styled';
 
 export interface IContentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -92,7 +93,7 @@ export class ContentUpdate extends React.Component<IContentUpdateProps, IContent
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               <AvForm model={isNew ? {} : contentEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (

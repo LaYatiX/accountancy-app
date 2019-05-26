@@ -17,6 +17,7 @@ import { IEntry } from 'app/shared/model/entry.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { Loading } from 'app/shared/layout/styled-components/styled';
 
 export interface IEntryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -87,7 +88,7 @@ export class EntryUpdate extends React.Component<IEntryUpdateProps, IEntryUpdate
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               <AvForm model={isNew ? {} : entryEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (

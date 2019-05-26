@@ -13,6 +13,7 @@ import { IContractor } from 'app/shared/model/contractor.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { EditOrUpdate, Loading } from 'app/shared/layout/styled-components/styled';
 
 export interface IContractorUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -70,13 +71,15 @@ export class ContractorUpdate extends React.Component<IContractorUpdateProps, IC
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="accountancyApp.contractor.home.createOrEditLabel">Create or edit a Contractor</h2>
+            <h2 id="accountancyApp.contractor.home.createOrEditLabel">
+              <EditOrUpdate isNew={isNew} />
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               <AvForm model={isNew ? {} : contractorEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
@@ -87,55 +90,55 @@ export class ContractorUpdate extends React.Component<IContractorUpdateProps, IC
                 ) : null}
                 <AvGroup>
                   <Label id="companyNameLabel" for="contractor-companyName">
-                    Company Name
+                    Nazwa firmy
                   </Label>
                   <AvField id="contractor-companyName" type="text" name="companyName" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="shortNameLabel" for="contractor-shortName">
-                    Short Name
+                    Krótka nazwa
                   </Label>
                   <AvField id="contractor-shortName" type="text" name="shortName" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="nameLabel" for="contractor-name">
-                    Name
+                    Adres firmy
                   </Label>
                   <AvField id="contractor-name" type="text" name="name" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="postalCodeLabel" for="contractor-postalCode">
-                    Postal Code
+                    Kod pocztowy
                   </Label>
                   <AvField id="contractor-postalCode" type="text" name="postalCode" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="cityLabel" for="contractor-city">
-                    City
+                    Miasto
                   </Label>
                   <AvField id="contractor-city" type="text" name="city" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="nIPLabel" for="contractor-nIP">
-                    N IP
+                    NIP
                   </Label>
                   <AvField id="contractor-nIP" type="text" name="nIP" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="phoneLabel" for="contractor-phone">
-                    Phone
+                    Telefon kontaktowy
                   </Label>
                   <AvField id="contractor-phone" type="string" className="form-control" name="phone" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/contractor" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Wróć</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Zapisz
                 </Button>
               </AvForm>
             )}

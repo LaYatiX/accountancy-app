@@ -12,6 +12,8 @@ export const ACTION_TYPES = {
   CREATE_COMPANY: 'company/CREATE_COMPANY',
   UPDATE_COMPANY: 'company/UPDATE_COMPANY',
   DELETE_COMPANY: 'company/DELETE_COMPANY',
+  WORKING_COMPANY: 'company/WORKING_COMPANY',
+  GET: 'company/GET',
   RESET: 'company/RESET'
 };
 
@@ -21,7 +23,8 @@ const initialState = {
   entities: [] as ReadonlyArray<ICompany>,
   entity: defaultValue,
   updating: false,
-  updateSuccess: false
+  updateSuccess: false,
+  workingCompany: defaultValue
 };
 
 export type CompanyState = Readonly<typeof initialState>;
@@ -30,6 +33,11 @@ export type CompanyState = Readonly<typeof initialState>;
 
 export default (state: CompanyState = initialState, action): CompanyState => {
   switch (action.type) {
+    case ACTION_TYPES.WORKING_COMPANY:
+      return {
+        ...state,
+        workingCompany: state.entities.filter(el => el.id === action.payload)[0]
+      };
     case REQUEST(ACTION_TYPES.FETCH_COMPANY_LIST):
     case REQUEST(ACTION_TYPES.FETCH_COMPANY):
       return {
@@ -88,7 +96,9 @@ export default (state: CompanyState = initialState, action): CompanyState => {
       };
     case ACTION_TYPES.RESET:
       return {
-        ...initialState
+        ...initialState,
+        workingCompany: state.workingCompany,
+        entities: state.entities
       };
     default:
       return state;
@@ -102,6 +112,15 @@ const apiUrl = 'api/companies';
 export const getEntities: ICrudGetAllAction<ICompany> = (page, size, sort) => ({
   type: ACTION_TYPES.FETCH_COMPANY_LIST,
   payload: axios.get<ICompany>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+});
+
+export const setWorkingCompany = companyId => ({
+  type: ACTION_TYPES.WORKING_COMPANY,
+  payload: companyId
+});
+
+export const getState = () => ({
+  type: ACTION_TYPES.GET
 });
 
 export const getEntity: ICrudGetAction<ICompany> = id => {

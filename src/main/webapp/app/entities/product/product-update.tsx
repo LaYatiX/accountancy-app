@@ -15,6 +15,7 @@ import { IProduct } from 'app/shared/model/product.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { EditOrUpdate, Loading } from 'app/shared/layout/styled-components/styled';
 
 export interface IProductUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -76,13 +77,15 @@ export class ProductUpdate extends React.Component<IProductUpdateProps, IProduct
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="accountancyApp.product.home.createOrEditLabel">Create or edit a Product</h2>
+            <h2 id="accountancyApp.product.home.createOrEditLabel">
+              <EditOrUpdate isNew={isNew} /> produkt
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               <AvForm model={isNew ? {} : productEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
@@ -93,11 +96,11 @@ export class ProductUpdate extends React.Component<IProductUpdateProps, IProduct
                 ) : null}
                 <AvGroup>
                   <Label id="nameLabel" for="product-name">
-                    Name
+                    Nazwa
                   </Label>
                   <AvField id="product-name" type="text" name="name" />
                 </AvGroup>
-                <AvGroup>
+                <AvGroup style={{ display: 'none' }}>
                   <Label id="quantityLabel" for="product-quantity">
                     Quantity
                   </Label>
@@ -105,31 +108,31 @@ export class ProductUpdate extends React.Component<IProductUpdateProps, IProduct
                 </AvGroup>
                 <AvGroup>
                   <Label id="priceNettoLabel" for="product-priceNetto">
-                    Price Netto
+                    Cena netto
                   </Label>
                   <AvField id="product-priceNetto" type="string" className="form-control" name="priceNetto" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="vATLabel" for="product-vAT">
-                    V AT
+                    VAT
                   </Label>
                   <AvField id="product-vAT" type="string" className="form-control" name="vAT" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="priceBruttoLabel" for="product-priceBrutto">
-                    Price Brutto
+                    Cena brutto
                   </Label>
                   <AvField id="product-priceBrutto" type="string" className="form-control" name="priceBrutto" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/product" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Wróć</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Zapisz
                 </Button>
               </AvForm>
             )}

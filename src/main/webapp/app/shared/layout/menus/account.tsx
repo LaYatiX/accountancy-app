@@ -1,12 +1,10 @@
 import React from 'react';
-import MenuItem from 'app/shared/layout/menus/menu-item';
 import { DropdownItem } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink as Link } from 'react-router-dom';
-import { Translate, translate } from 'react-jhipster';
-import { NavItem, Dropdown, NavDropdown } from 'react-bootstrap';
+import { Dropdown, NavItem } from 'react-bootstrap';
 import { AccountAvatar, NavLinkDropdown } from 'app/shared/layout/header/header-components';
-import { faCogs, faList, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faCogs, faList, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 
 const accountMenuItemsAuthenticated = isAdmin => (
@@ -14,6 +12,10 @@ const accountMenuItemsAuthenticated = isAdmin => (
     <Link to={'/account/settings'} className={'dropdown-item'}>
       <FontAwesomeIcon icon={faUser} className={'fa-sm fa-fw mr-2 text-gray-400'} />
       Profil
+    </Link>
+    <Link to={'/entity/company/working'} className={'dropdown-item'}>
+      <FontAwesomeIcon icon={faBuilding} className={'fa-sm fa-fw mr-2 text-gray-400'} />
+      Dane firmy
     </Link>
     <Link to={'/account/password'} className={'dropdown-item'}>
       <FontAwesomeIcon icon={faCogs} className={'fa-sm fa-fw mr-2 text-gray-400'} />

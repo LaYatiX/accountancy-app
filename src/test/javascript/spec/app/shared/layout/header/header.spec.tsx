@@ -16,7 +16,10 @@ describe('Header', () => {
     isAdmin: true,
     ribbonEnv: 'dev',
     isInProduction: false,
-    isSwaggerEnabled: true
+    isSwaggerEnabled: true,
+    companies: [],
+    workingCompany: {},
+    handleCompanyChange: () => {}
   };
   const prodProps = {
     ...devProps,

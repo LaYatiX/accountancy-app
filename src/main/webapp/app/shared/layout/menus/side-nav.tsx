@@ -13,7 +13,8 @@ import {
   faBarcode,
   faPlus,
   faMinus,
-  faDollarSign
+  faDollarSign,
+  faUser
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink as Link } from 'react-router-dom';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -73,7 +74,7 @@ class SideNav extends Component<IMenuItem> {
 
         <hr className="sidebar-divider" />
 
-        <div className="sidebar-heading">Głowne opcje</div>
+        <div className="sidebar-heading">Główne opcje</div>
 
         <NavItem>
           <Link to={'/entity/income'} className={'nav-link'}>
@@ -111,6 +112,13 @@ class SideNav extends Component<IMenuItem> {
           <Link to={'/entity/product'} className="nav-link collapsed">
             <StyledFontAwesomeIcon icon={faBarcode} />
             <span>Produkty</span>
+          </Link>
+        </NavItem>
+
+        <NavItem>
+          <Link to={'/entity/company'} className="nav-link collapsed">
+            <StyledFontAwesomeIcon icon={faUser} />
+            <span>Firmy</span>
           </Link>
         </NavItem>
 

@@ -3,88 +3,115 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAllAction } from 'react-jhipster';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './contractor.reducer';
+import { ButtonBar, EqualHeightColumns, HeaderButton, Loading, VerticalSpacer } from 'app/shared/layout/styled-components/styled';
+import { Card, Form, ListGroup } from 'react-bootstrap';
 import { IContractor } from 'app/shared/model/contractor.model';
+
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IContractorProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface IContractorState {
+  contractorList: IContractor[];
+}
 
-export class Contractor extends React.Component<IContractorProps> {
+export class Contractor extends React.Component<IContractorProps, IContractorState> {
+  constructor(props: Readonly<IContractorProps>) {
+    super(props);
+    this.state = {
+      contractorList: []
+    };
+  }
+
   componentDidMount() {
     this.props.getEntities();
   }
 
+  componentWillReceiveProps(nextProps: Readonly<IContractorProps>, nextContext: any): void {
+    if (nextProps.contractorList !== this.props.contractorList) {
+      this.setState({
+        contractorList: Array.from(nextProps.contractorList)
+      });
+    }
+  }
+
   render() {
-    const { contractorList, match } = this.props;
+    const { match, loading } = this.props;
+    const { contractorList } = this.state;
+
+    const searchHandler = e => {
+      const searchText = e.target.value;
+      const list = Array.from(this.props.contractorList);
+      this.setState(() => ({
+        contractorList:
+          searchText && list.length > 0 ? list.filter(value => value.companyName.toLowerCase().includes(searchText.toLowerCase())) : list
+      }));
+    };
+
+    const items = contractorList.map((contractor, i) => (
+      <Card className="border-left-primary" key={contractor.id}>
+        <Card.Body>
+          <Card.Title>{contractor.companyName}</Card.Title>
+          <ListGroup variant="flush">
+            <ListGroup.Item>Krótka nazwa - {contractor.shortName}</ListGroup.Item>
+            <ListGroup.Item>Adres - {contractor.name}</ListGroup.Item>
+            <ListGroup.Item>Kod pocztowy {contractor.postalCode}</ListGroup.Item>
+            <ListGroup.Item>Miasto - {contractor.city}</ListGroup.Item>
+            <ListGroup.Item>NIP {contractor.nIP}</ListGroup.Item>
+            <ListGroup.Item>Telefon kontaktowy - {contractor.phone}</ListGroup.Item>
+          </ListGroup>
+          <VerticalSpacer />
+          <ButtonBar className="flex-btn-group-container">
+            <Button tag={Link} to={`${match.url}/${contractor.id}/edit`} color="primary" size="sm" style={{ flex: '25' }}>
+              <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edytuj</span>
+            </Button>
+            <Button tag={Link} to={`${match.url}/${contractor.id}/delete`} color="danger" size="sm">
+              <FontAwesomeIcon icon="trash" />{' '}
+            </Button>
+          </ButtonBar>
+        </Card.Body>
+      </Card>
+    ));
+
     return (
       <div>
-        <h2 id="contractor-heading">
-          Contractors
+        <HeaderButton id="contractor-heading">
+          Kontrahenci
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create new Contractor
+            &nbsp; Dodaj nowego kontrahenta
           </Link>
-        </h2>
-        <div className="table-responsive">
-          <Table responsive>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Company Name</th>
-                <th>Short Name</th>
-                <th>Name</th>
-                <th>Postal Code</th>
-                <th>City</th>
-                <th>N IP</th>
-                <th>Phone</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {contractorList.map((contractor, i) => (
-                <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${contractor.id}`} color="link" size="sm">
-                      {contractor.id}
-                    </Button>
-                  </td>
-                  <td>{contractor.companyName}</td>
-                  <td>{contractor.shortName}</td>
-                  <td>{contractor.name}</td>
-                  <td>{contractor.postalCode}</td>
-                  <td>{contractor.city}</td>
-                  <td>{contractor.nIP}</td>
-                  <td>{contractor.phone}</td>
-                  <td className="text-right">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${contractor.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                      </Button>
-                      <Button tag={Link} to={`${match.url}/${contractor.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button>
-                      <Button tag={Link} to={`${match.url}/${contractor.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
+        </HeaderButton>
+        <Form>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label>Wyszukaj produkt</Form.Label>
+            <Form.Control type="text" placeholder="Wyszukaj kontrahentów" onChange={searchHandler} />
+          </Form.Group>
+        </Form>
+
+        {loading ? (
+          <Loading />
+        ) : (
+          <ReactCSSTransitionGroup
+            component={EqualHeightColumns}
+            transitionName="simple-fade"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+          >
+            {items}
+          </ReactCSSTransitionGroup>
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ contractor }: IRootState) => ({
-  contractorList: contractor.entities
+  contractorList: contractor.entities,
+  loading: contractor.loading
 });
 
 const mapDispatchToProps = {

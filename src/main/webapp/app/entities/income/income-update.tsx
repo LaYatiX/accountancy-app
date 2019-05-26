@@ -15,6 +15,7 @@ import { IIncome } from 'app/shared/model/income.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { Loading } from 'app/shared/layout/styled-components/styled';
 
 export interface IIncomeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -82,7 +83,7 @@ export class IncomeUpdate extends React.Component<IIncomeUpdateProps, IIncomeUpd
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               <AvForm model={isNew ? {} : incomeEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (

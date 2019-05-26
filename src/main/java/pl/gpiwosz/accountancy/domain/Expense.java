@@ -32,7 +32,7 @@ public class Expense implements Serializable {
     @Column(name = "jhi_date")
     private LocalDate date;
 
-    @OneToMany(mappedBy = "expense")
+    @OneToMany(mappedBy = "expense", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Entry> entries = new HashSet<>();
 

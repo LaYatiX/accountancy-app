@@ -83,7 +83,7 @@ public class ExceptionTranslator implements ProblemHandling {
 
         Problem problem = Problem.builder()
             .withType(ErrorConstants.CONSTRAINT_VIOLATION_TYPE)
-            .withTitle("Method argument not valid")
+            .withTitle("Nieprawidłowe dane")
             .withStatus(defaultConstraintViolationStatus())
             .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION)
             .with(FIELD_ERRORS_KEY, fieldErrors)

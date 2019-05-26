@@ -32,7 +32,7 @@ public class Income implements Serializable {
     @Column(name = "jhi_date")
     private LocalDate date;
 
-    @OneToMany(mappedBy = "income")
+    @OneToMany(mappedBy = "income", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Entry> entries = new HashSet<>();
 

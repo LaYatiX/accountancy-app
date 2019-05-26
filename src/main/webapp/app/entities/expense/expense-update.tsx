@@ -15,6 +15,7 @@ import { IExpense } from 'app/shared/model/expense.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { Loading } from 'app/shared/layout/styled-components/styled';
 
 export interface IExpenseUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -82,7 +83,7 @@ export class ExpenseUpdate extends React.Component<IExpenseUpdateProps, IExpense
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               <AvForm model={isNew ? {} : expenseEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (

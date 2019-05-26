@@ -12,6 +12,7 @@ export const ACTION_TYPES = {
   CREATE_INVOICE: 'invoice/CREATE_INVOICE',
   UPDATE_INVOICE: 'invoice/UPDATE_INVOICE',
   DELETE_INVOICE: 'invoice/DELETE_INVOICE',
+  FETCH_INVOICE_PDF: 'invoice/FETCH_INVOICE_PDF',
   RESET: 'invoice/RESET'
 };
 
@@ -21,7 +22,8 @@ const initialState = {
   entities: [] as ReadonlyArray<IInvoice>,
   entity: defaultValue,
   updating: false,
-  updateSuccess: false
+  updateSuccess: false,
+  pdf: 'asd'
 };
 
 export type InvoiceState = Readonly<typeof initialState>;
@@ -30,6 +32,11 @@ export type InvoiceState = Readonly<typeof initialState>;
 
 export default (state: InvoiceState = initialState, action): InvoiceState => {
   switch (action.type) {
+    case ACTION_TYPES.FETCH_INVOICE_PDF:
+      return {
+        ...state,
+        pdf: action.payload.data
+      };
     case REQUEST(ACTION_TYPES.FETCH_INVOICE_LIST):
     case REQUEST(ACTION_TYPES.FETCH_INVOICE):
       return {
@@ -109,6 +116,22 @@ export const getEntity: ICrudGetAction<IInvoice> = id => {
   return {
     type: ACTION_TYPES.FETCH_INVOICE,
     payload: axios.get<IInvoice>(requestUrl)
+  };
+};
+
+export const getPdf: any = id => {
+  const requestUrl = `${apiUrl}/pdf/${id}`;
+  return {
+    type: ACTION_TYPES.FETCH_INVOICE_PDF,
+    payload: axios.get<IInvoice>(requestUrl)
+  };
+};
+
+export const sendEmail: any = ({ id, email }) => {
+  const requestUrl = `${apiUrl}/pdf/${id}`;
+  return {
+    type: ACTION_TYPES.FETCH_INVOICE_PDF,
+    payload: axios.post(requestUrl, email)
   };
 };
 

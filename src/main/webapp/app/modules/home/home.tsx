@@ -4,38 +4,55 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { Row, Col, Alert } from 'reactstrap';
-
-import { IRootState } from 'app/shared/reducers';
+import { Alert, Col, Row } from 'reactstrap';
 import { getSession } from 'app/shared/reducers/authentication';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faComment, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { getState } from 'app/entities/company/company.reducer';
+import { HeaderButton } from 'app/shared/layout/styled-components/styled';
+import { number } from 'prop-types';
+import { IAppProps } from 'app/app';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
+export interface IHomeState {
+  monthIncome?: number;
+  yearIncome?: number;
+  toPay?: number;
+  invoices?: number;
+}
 
-export class Home extends React.Component<IHomeProp> {
+export class Home extends React.Component<IHomeProp, IHomeState> {
   componentDidMount() {
     this.props.getSession();
   }
 
+  componentWillReceiveProps(nextProps: Readonly<IHomeProp>, nextContext: Readonly<IHomeProp>): void {
+    if (nextProps.isAuthenticated && nextProps.workingCompany !== undefined && nextProps.workingCompany !== this.props.workingCompany) {
+      const companyInvoices = nextProps.workingCompany.senders || [];
+      const monthSumUp = nextProps.workingCompany.monthSumUps || [];
+
+      this.setState(() => ({
+        monthIncome: companyInvoices.reduce((previousValue, { totalBrutto }) => previousValue + totalBrutto, 0) || 0,
+        yearIncome: companyInvoices.reduce((previousValue, { totalBrutto }) => previousValue + totalBrutto, 0) * 12 || 0,
+        toPay: monthSumUp.expenseSum || 0,
+        invoices: companyInvoices.length
+      }));
+    }
+  }
+
   render() {
-    const { account } = this.props;
+    const { account, workingCompany } = this.props;
     return (
       <div className={'container-fluid'}>
-        <div className="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-          <Link to={'/'} className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i className="fas fa-download fa-sm text-white-50" /> Generate Report
-          </Link>
-        </div>
+        <HeaderButton>Pracujesz w kontekście firmy: {workingCompany.companyName}</HeaderButton>
         <Row>
           <div className="col-xl-3 col-md-6 mb-4">
             <div className="card border-left-primary shadow h-100 py-2">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                    <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Miesięczne zarobki</div>
+                    <div className="h5 mb-0 font-weight-bold text-gray-800">40,000 PLN</div>
                   </div>
                   <div className="col-auto">
                     <FontAwesomeIcon icon={faCalendar} size={'2x'} className={'text-gray-300'} />
@@ -50,8 +67,8 @@ export class Home extends React.Component<IHomeProp> {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                    <div className="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1">Roczne zarobki</div>
+                    <div className="h5 mb-0 font-weight-bold text-gray-800">215,000 PLN</div>
                   </div>
                   <div className="col-auto">
                     <FontAwesomeIcon icon={faDollarSign} size={'2x'} className={'text-gray-300'} />
@@ -62,19 +79,19 @@ export class Home extends React.Component<IHomeProp> {
           </div>
 
           <div className="col-xl-3 col-md-6 mb-4">
-            <div className="card border-left-info shadow h-100 py-2">
+            <div className="card border-left-danger shadow h-100 py-2">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Collecting Monthly Rent</div>
+                    <div className="text-xs font-weight-bold text-danger text-uppercase mb-1">Pozostało do zapłaty w tym miesiącu</div>
                     <div className="row no-gutters align-items-center">
                       <div className="col-auto">
-                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">20,000 PLN</div>
                       </div>
                       <div className="col">
                         <div className="progress progress-sm mr-2">
                           <div
-                            className="progress-bar bg-info"
+                            className="progress-bar bg-danger"
                             role="progressbar"
                             style={{ width: '50%' }}
                             aria-valuenow={50}
@@ -98,7 +115,7 @@ export class Home extends React.Component<IHomeProp> {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">Remaining Collections</div>
+                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">Wystawione faktury</div>
                     <div className="h5 mb-0 font-weight-bold text-gray-800">18</div>
                   </div>
                   <div className="col-auto">
@@ -116,10 +133,11 @@ export class Home extends React.Component<IHomeProp> {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated
+  isAuthenticated: storeState.authentication.isAuthenticated,
+  workingCompany: storeState.company.workingCompany
 });
 
-const mapDispatchToProps = { getSession };
+const mapDispatchToProps = { getSession, getState };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

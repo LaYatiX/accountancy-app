@@ -1,7 +1,6 @@
 import './header.scss';
 
 import React from 'react';
-import { Storage } from 'react-jhipster';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -11,6 +10,11 @@ import { faBars, faEnvelope, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Dropdown, Form, NavItem } from 'react-bootstrap';
 import { NavLinkDropdown } from 'app/shared/layout/header/header-components';
 import { AccountMenu, AdminMenu, EntitiesMenu } from 'app/shared/layout/menus';
+import { InputLabel, MenuItem, Select } from '@material-ui/core';
+import { ICompany } from 'app/shared/model/company.model';
+import { IContractorProps } from 'app/entities/contractor/contractor';
+
+// import('@date-io/core').IUtils;
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -18,23 +22,38 @@ export interface IHeaderProps {
   ribbonEnv: string;
   isInProduction: boolean;
   isSwaggerEnabled: boolean;
+  handleCompanyChange: Function;
+  companies: ReadonlyArray<ICompany>;
+  workingCompany?: ICompany;
   user?: object;
 }
 
 export interface IHeaderState {
   menuOpen: boolean;
+  companies: ICompany[];
+  company?: ICompany;
 }
 
 export default class Header extends React.Component<IHeaderProps, IHeaderState> {
   state: IHeaderState = {
-    menuOpen: false
+    menuOpen: false,
+    companies: Array.from(this.props.companies)
   };
-  // toggleMenu = () => {
-  //   this.setState({ menuOpen: !this.state.menuOpen });
-  // };
 
   openMenu = () => {
     document.getElementById('accordionSidebar').classList.toggle('toggled');
+  };
+
+  componentWillReceiveProps(nextProps: Readonly<IHeaderProps>, nextContext: any): void {
+    if (nextProps.companies !== this.props.companies) {
+      this.setState({
+        companies: Array.from(nextProps.companies)
+      });
+    }
+  }
+
+  handleCompanyChange = e => {
+    this.props.handleCompanyChange(e.target.value);
   };
 
   render() {
@@ -51,97 +70,26 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
           <button onClick={this.openMenu} id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
             <FontAwesomeIcon icon={faBars} />
           </button>
-          {/*<form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">*/}
-          {/*<div className="input-group">*/}
-          {/*<input*/}
-          {/*type="text"*/}
-          {/*className="form-control bg-light border-0 small"*/}
-          {/*placeholder="Search for..."*/}
-          {/*aria-label="Search"*/}
-          {/*aria-describedby="basic-addon2"*/}
+          {/*<DatePicker*/}
+          {/*views={['year', 'month']}*/}
+          {/*label="Okres"*/}
+          {/*helperText="Wybierz okres"*/}
+          {/*minDate={new Date('2010-01-01')}*/}
+          {/*maxDate={new Date()}*/}
+          {/*value={new Date()}*/}
+          {/*onChange={this.handleDateChange}*/}
           {/*/>*/}
-          {/*<div className="input-group-append">*/}
-          {/*<button className="btn btn-primary" type="button">*/}
-          {/*<FontAwesomeIcon icon={faSearch} className={'fa-sm'} />*/}
-          {/*</button>*/}
-          {/*</div>*/}
-          {/*</div>*/}
-          {/*</form>*/}
-
-          <NavItem className="nav-item dropdown no-arrow d-sm-none">
-            <Link to={'/'}>
-              <FontAwesomeIcon icon={faSearch} className={'fa-fw'} />
-            </Link>
-            <div className="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-              <Form className="form-inline mr-auto w-100 navbar-search">
-                <Form.Group className="input-group">
-                  <Form.Control type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
-                  <div className="input-group-append">
-                    <button className="btn btn-primary" type="button">
-                      <FontAwesomeIcon icon={faSearch} className={'fa-sm'} />
-                    </button>
-                  </div>
-                </Form.Group>
-              </Form>
-            </div>
-          </NavItem>
-          <Dropdown as={NavItem} className={'no-arrow'}>
-            <Dropdown.Toggle id={'0'} className={'nav-link dropdown-toggle'} as={NavLinkDropdown}>
-              <FontAwesomeIcon icon={faEnvelope} className={'fa-fw'} />
-              <span className="badge badge-danger badge-counter">7</span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu className={'shadow animated--grow-in dropdown-list'} as={'div'}>
-              <h6 className="dropdown-header">Message Center</h6>
-              <Link to={'/'} className={'dropdown-item d-flex align-items-center'}>
-                <div className="dropdown-list-image mr-3">
-                  <img className="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="" />
-                  <div className="status-indicator bg-success" />
-                </div>
-                <div className="font-weight-bold">
-                  <div className="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                  <div className="small text-gray-500">Emily Fowler · 58m</div>
-                </div>
-              </Link>
-              <Link to={'/page-2'} className={'dropdown-item d-flex align-items-center'}>
-                <div className="dropdown-list-image mr-3">
-                  <img className="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="" />
-                  <div className="status-indicator" />
-                </div>
-                <div>
-                  <div className="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                  <div className="small text-gray-500">Jae Chun · 1d</div>
-                </div>
-              </Link>
-              <Link to={'/'} className={'dropdown-item d-flex align-items-center'}>
-                <div className="dropdown-list-image mr-3">
-                  <img className="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="" />
-                  <div className="status-indicator bg-warning" />
-                </div>
-                <div>
-                  <div className="text-truncate">
-                    Last month's report looks great, I am very happy with the progress so far, keep up the good work!
-                  </div>
-                  <div className="small text-gray-500">Morgan Alvarez · 2d</div>
-                </div>
-              </Link>
-              <Link to={'/users'} className={'dropdown-item d-flex align-items-center'}>
-                <div className="dropdown-list-image mr-3">
-                  <img className="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="" />
-                  <div className="status-indicator bg-success" />
-                </div>
-                <div>
-                  <div className="text-truncate">
-                    Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't
-                    good...
-                  </div>
-                  <div className="small text-gray-500">Chicken the Dog · 2w</div>
-                </div>
-              </Link>
-              <Link to={'/users'} className={'dropdown-item text-center small text-gray-500'}>
-                Read More Messages
-              </Link>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Select id={'workingCompany'} value={this.props.workingCompany.id} onChange={this.handleCompanyChange}>
+            {this.props.companies.map(el => (
+              <MenuItem value={el.id} key={el.id}>
+                {el.companyName}
+              </MenuItem>
+            ))}
+            {/*<MenuItem value="LINEAR" key="0">Liniowo 19%</MenuItem>*/}
+            {/*<MenuItem value="COMMON" key="0">Na zasadach ogólnych 18%</MenuItem>*/}
+            {/*<MenuItem value="LUPSUM" key="0">Ryczałt ewidencjonowany</MenuItem>*/}
+          </Select>
+          {/*<InputLabel htmlFor="workingCompany">Kontekst firmy:</InputLabel>*/}
 
           <div className="topbar-divider d-none d-sm-block" />
 

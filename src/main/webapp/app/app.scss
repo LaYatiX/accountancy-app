@@ -310,7 +310,7 @@ Metrics and Health styles
 
 .btn-group {
   width: 100%;
-  padding-top: 1rem;
+  //padding-top: 1rem;
 }
 
 .spinner-border {
@@ -358,12 +358,42 @@ Metrics and Health styles
   transition: all 300ms ease-in;
 }
 
+.simple-fade-enter {
+  opacity: 0.01;
+}
+
+.simple-fade-enter.simple-fade-enter-active {
+  opacity: 1;
+  transition: all 500ms ease-in;
+}
+
+.simple-fade-leave {
+  opacity: 1;
+}
+
+.simple-fade-leave.simple-fade-leave-active {
+  opacity: 0.01;
+  transition: all 300ms ease-in;
+}
+
 .Toastify__toast--success {
   background: $primary;
 }
 
 .Toastify__toast--error {
   background: $danger;
+}
+
+[class*='MuiSelect-select'] {
+  &:focus {
+    background-color: transparent !important;
+  }
+}
+[class*='MuiInput-underline'] {
+  &:after,
+  &:before {
+    border-bottom: 0 !important;
+  }
 }
 
 .alert {

@@ -16,7 +16,7 @@ import java.util.Objects;
  * A Company.
  */
 @Entity
-@Table(name = "company")
+@Table(name = "invoice")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Company implements Serializable {
 
@@ -72,11 +72,11 @@ public class Company implements Serializable {
     @Column(name = "is_zu_spayer")
     private Boolean isZUSpayer;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "invoice")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<MonthSumUp> monthSumUps = new HashSet<>();
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "invoice")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Invoice> senders = new HashSet<>();
 

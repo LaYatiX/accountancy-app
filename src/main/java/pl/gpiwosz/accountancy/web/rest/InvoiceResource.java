@@ -26,9 +26,11 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -151,15 +153,16 @@ public class InvoiceResource {
         }
     }
 
-    @PostMapping(value = "/invoices/pdf/{id}")
-    public ResponseEntity<Void> sendInvoicePdf(@PathVariable Long id, @RequestBody String email) {
+    @GetMapping(value = "/invoices/pdfsend/{id}")
+    public ResponseEntity<Void> sendInvoicePdf(@PathVariable Long id, @RequestParam String email) {
         log.debug("REST request to get all Invoices");
         Invoice invoice = invoiceRepository.findOneWithEagerRelationships(id).get();
         File file = null;
         ResponseEntity respEntity;
         try {
             file = invoiceService.generateInvoiceFor(invoice, Locale.ENGLISH);
-            mailService.sendInvoiceMail(email, file);
+            String result = java.net.URLDecoder.decode(email, StandardCharsets.UTF_8.name());
+            mailService.sendInvoiceMail(result, file);
             return new ResponseEntity<>( HttpStatus.OK );
         } catch (IOException e) {
             respEntity = new ResponseEntity("Nie znaleziono pliku", HttpStatus.OK);

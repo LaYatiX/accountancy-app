@@ -53,6 +53,7 @@ spring:
   liquibase:
     contexts: prod
   mail:
+    default-encoding: UTF-8
     host: smtp.gmail.com
     port: 587
     username: applicationestate@gmail.com

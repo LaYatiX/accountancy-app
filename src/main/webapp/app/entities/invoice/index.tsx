@@ -5,7 +5,7 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
 import Invoice from './invoice';
 import InvoiceDetail from './invoice-detail';
-import InvoiceUpdate from './invoice-update';
+import InvoiceUpdate from './invoice-edit/invoice-update';
 import InvoiceDeleteDialog from './invoice-delete-dialog';
 
 const Routes = ({ match }) => (

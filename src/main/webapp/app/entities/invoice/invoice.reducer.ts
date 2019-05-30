@@ -13,6 +13,7 @@ export const ACTION_TYPES = {
   UPDATE_INVOICE: 'invoice/UPDATE_INVOICE',
   DELETE_INVOICE: 'invoice/DELETE_INVOICE',
   FETCH_INVOICE_PDF: 'invoice/FETCH_INVOICE_PDF',
+  SEND_INVOICE_PDF: 'invoice/SEND_INVOICE_PDF',
   RESET: 'invoice/RESET'
 };
 
@@ -45,6 +46,7 @@ export default (state: InvoiceState = initialState, action): InvoiceState => {
         updateSuccess: false,
         loading: true
       };
+    case REQUEST(ACTION_TYPES.SEND_INVOICE_PDF):
     case REQUEST(ACTION_TYPES.CREATE_INVOICE):
     case REQUEST(ACTION_TYPES.UPDATE_INVOICE):
     case REQUEST(ACTION_TYPES.DELETE_INVOICE):
@@ -53,6 +55,13 @@ export default (state: InvoiceState = initialState, action): InvoiceState => {
         errorMessage: null,
         updateSuccess: false,
         updating: true
+      };
+    case FAILURE(ACTION_TYPES.SEND_INVOICE_PDF):
+      return {
+        ...state,
+        loading: false,
+        updating: false,
+        updateSuccess: false
       };
     case FAILURE(ACTION_TYPES.FETCH_INVOICE_LIST):
     case FAILURE(ACTION_TYPES.FETCH_INVOICE):
@@ -85,6 +94,12 @@ export default (state: InvoiceState = initialState, action): InvoiceState => {
         updating: false,
         updateSuccess: true,
         entity: action.payload.data
+      };
+    case SUCCESS(ACTION_TYPES.SEND_INVOICE_PDF):
+      return {
+        ...state,
+        updating: false,
+        updateSuccess: true
       };
     case SUCCESS(ACTION_TYPES.DELETE_INVOICE):
       return {
@@ -127,12 +142,14 @@ export const getPdf: any = id => {
   };
 };
 
-export const sendEmail: any = ({ id, email }) => {
-  const requestUrl = `${apiUrl}/pdf/${id}`;
-  return {
-    type: ACTION_TYPES.FETCH_INVOICE_PDF,
-    payload: axios.post(requestUrl, email)
-  };
+export const sendEmail: any = (id, email) => async dispatch => {
+  const requestUrl = `${apiUrl}/pdfsend/${id}?email=${email}`;
+  const result = await dispatch({
+    type: ACTION_TYPES.SEND_INVOICE_PDF,
+    payload: axios.get(requestUrl)
+  });
+  dispatch(getEntities());
+  return result;
 };
 
 export const createEntity: ICrudPutAction<IInvoice> = entity => async dispatch => {

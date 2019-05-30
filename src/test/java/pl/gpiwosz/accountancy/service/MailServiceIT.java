@@ -55,6 +55,7 @@ public class MailServiceIT {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
+        javaMailSender.setDefaultEncoding("UTF-8");
         mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine);
     }
 

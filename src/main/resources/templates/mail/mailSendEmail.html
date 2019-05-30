@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{email.invoice.title}">Twoja faktura</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p th:text="#{email.reset.greeting.anon}">
+            Drogi
+        </p>
+
+        <p>
+            <span th:text="#{email.invoice.content}">Oto Twoja faktura wysłana z serwisu PriceAdmin</span>
+        </p>
+
+        <br>
+
+        <p>
+            <span th:text="#{email.reset.text2}">Z poważaniem, </span>
+            <br/>
+            <em th:text="#{email.signature}"></em>
+        </p>
+    </body>
+</html>

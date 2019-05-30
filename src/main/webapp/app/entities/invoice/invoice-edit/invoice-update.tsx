@@ -8,18 +8,18 @@ import { faMailBulk, faPaperclip, faPlus } from '@fortawesome/free-solid-svg-ico
 import styled from 'styled-components';
 // tslint:disable-next-line:no-unused-variable
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
 import { getEntities as getContents } from 'app/entities/content/content.reducer';
 import { IProduct } from 'app/shared/model/product.model';
 import { getEntities as getProducts } from 'app/entities/product/product.reducer';
 import { getEntities as getCompanies, getState } from 'app/entities/company/company.reducer';
 import { IContractor } from 'app/shared/model/contractor.model';
 import { getEntities as getContractors } from 'app/entities/contractor/contractor.reducer';
-import { createEntity, getEntity, getPdf, reset, sendEmail, updateEntity } from './invoice.reducer';
+import { createEntity, getEntity, getPdf, reset, sendEmail, updateEntity } from '../invoice.reducer';
 // tslint:disable-next-line:no-unused-variable
 import { Flex, Loading } from 'app/shared/layout/styled-components/styled';
-import InvoiceItem from 'app/entities/invoice/invoice-item';
-import { InvoiceEmailModal } from 'app/entities/invoice/invoice-email-modal';
+import { IRootState } from 'app/shared/reducers';
+import { InvoiceEmailModal } from 'app/entities/invoice/invoice-edit/invoice-email-modal';
+import InvoiceItem from 'app/entities/invoice/invoice-edit/invoice-item';
 
 const PointerIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
@@ -126,11 +126,12 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
     this.props.getContractors();
     // this.props.getPdf(this.props.match.params.id);
   }
+
   addProduct() {
     this.setState(prevState => ({
       products: prevState.products.concat([
         {
-          id: this.gen.next().value,
+          id: this.gen.next().value + prevState.products.reduce((previousValue, { id }) => (id > previousValue ? id : previousValue), 0),
           name: '',
           priceBrutto: 0,
           priceNetto: 0,
@@ -171,16 +172,12 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
       };
     });
   }
-  sendMail(event, errors, { email }) {
-    this.props.sendEmail(this.props.match.params.id, email);
-  }
 
   render() {
-    const { invoiceEntity, contents, companies, contractors, loading, updating } = this.props;
+    const { invoiceEntity, contractors, loading, updating } = this.props;
     const { isNew, products, contractor, sumBrutto, sumNetto, sumVAT } = this.state;
 
     const downloadPdf = () => {
-      // await getPdf(this.props.match.params.id);
       window.open('/api/invoices/pdf/' + this.props.match.params.id);
     };
 
@@ -190,6 +187,11 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
 
     const closeModal = () => {
       this.setState(() => ({ modalOpen: false }));
+    };
+
+    const sendMailHandler = (event, errors, { email }) => {
+      this.props.sendEmail(this.props.match.params.id, email);
+      closeModal();
     };
 
     const setContractor = e => {
@@ -226,11 +228,11 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
       this.addProduct();
     };
 
-    const items = products && products.map(el => <InvoiceItem key={el.id} product={el} updateHandler={updateProducts} />);
+    const items = products && products.map((el, index) => <InvoiceItem key={index} product={el} updateHandler={updateProducts} />);
 
     return (
       <div>
-        <InvoiceEmailModal handleClose={closeModal} handleSendMail={this.sendMail} showModal={this.state.modalOpen} />
+        <InvoiceEmailModal handleClose={closeModal} handleSendMail={sendMailHandler} showModal={this.state.modalOpen} />
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="accountancyApp.invoice.home.createOrEditLabel">Dodaj lub edytuj fakture</h2>

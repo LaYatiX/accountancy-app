@@ -27,7 +27,7 @@ public class CompanyResource {
 
     private final Logger log = LoggerFactory.getLogger(CompanyResource.class);
 
-    private static final String ENTITY_NAME = "company";
+    private static final String ENTITY_NAME = "invoice";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -39,31 +39,31 @@ public class CompanyResource {
     }
 
     /**
-     * {@code POST  /companies} : Create a new company.
+     * {@code POST  /invoices} : Create a new invoice.
      *
-     * @param company the company to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new company, or with status {@code 400 (Bad Request)} if the company has already an ID.
+     * @param company the invoice to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new invoice, or with status {@code 400 (Bad Request)} if the invoice has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/companies")
     public ResponseEntity<Company> createCompany(@RequestBody Company company) throws URISyntaxException {
         log.debug("REST request to save Company : {}", company);
         if (company.getId() != null) {
-            throw new BadRequestAlertException("A new company cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new invoice cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Company result = companyRepository.save(company);
-        return ResponseEntity.created(new URI("/api/companies/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/invoices/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /companies} : Updates an existing company.
+     * {@code PUT  /invoices} : Updates an existing invoice.
      *
-     * @param company the company to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated company,
-     * or with status {@code 400 (Bad Request)} if the company is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the company couldn't be updated.
+     * @param company the invoice to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated invoice,
+     * or with status {@code 400 (Bad Request)} if the invoice is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the invoice couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/companies")
@@ -79,9 +79,9 @@ public class CompanyResource {
     }
 
     /**
-     * {@code GET  /companies} : get all the companies.
+     * {@code GET  /invoices} : get all the invoices.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of companies in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of invoices in body.
      */
     @GetMapping("/companies")
     public List<Company> getAllCompanies() {
@@ -90,10 +90,10 @@ public class CompanyResource {
     }
 
     /**
-     * {@code GET  /companies/:id} : get the "id" company.
+     * {@code GET  /invoices/:id} : get the "id" invoice.
      *
-     * @param id the id of the company to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the company, or with status {@code 404 (Not Found)}.
+     * @param id the id of the invoice to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the invoice, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/companies/{id}")
     public ResponseEntity<Company> getCompany(@PathVariable Long id) {
@@ -103,9 +103,9 @@ public class CompanyResource {
     }
 
     /**
-     * {@code DELETE  /companies/:id} : delete the "id" company.
+     * {@code DELETE  /invoices/:id} : delete the "id" invoice.
      *
-     * @param id the id of the company to delete.
+     * @param id the id of the invoice to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/companies/{id}")

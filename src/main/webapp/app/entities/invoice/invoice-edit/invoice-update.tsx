@@ -16,14 +16,13 @@ import { IContractor } from 'app/shared/model/contractor.model';
 import { getEntities as getContractors } from 'app/entities/contractor/contractor.reducer';
 import { createEntity, getEntity, getPdf, reset, sendEmail, updateEntity } from '../invoice.reducer';
 // tslint:disable-next-line:no-unused-variable
-import { Flex, Loading } from 'app/shared/layout/styled-components/styled';
+import { Flex, Loading, PointerIcon } from 'app/shared/layout/styled-components/styled';
 import { IRootState } from 'app/shared/reducers';
 import { InvoiceEmailModal } from 'app/entities/invoice/invoice-edit/invoice-email-modal';
 import InvoiceItem from 'app/entities/invoice/invoice-edit/invoice-item';
-
-const PointerIcon = styled(FontAwesomeIcon)`
-  cursor: pointer;
-`;
+import { IInvoice } from 'app/shared/model/invoice.model';
+import * as moment from 'moment';
+import { format } from 'date-fns';
 
 const PdfButtons = styled(Flex)`
   justify-content: flex-end;
@@ -57,7 +56,7 @@ export interface IInvoiceUpdateState {
 
 export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoiceUpdateState> {
   private gen: IterableIterator<number>;
-
+  private form;
   *generator() {
     let index = 0;
     while (true) {
@@ -99,7 +98,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
   }
 
   componentWillReceiveProps(nextProps: Readonly<IInvoiceUpdateProps>, nextContext: any): void {
-    if (nextProps.invoiceEntity !== this.props.invoiceEntity) {
+    if (nextProps.invoiceEntity !== this.props.invoiceEntity && !this.state.isNew) {
       this.setState({
         products: Array.from(nextProps.invoiceEntity.products) || []
       });
@@ -178,7 +177,11 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
     const { isNew, products, contractor, sumBrutto, sumNetto, sumVAT } = this.state;
 
     const downloadPdf = () => {
-      window.open('/api/invoices/pdf/' + this.props.match.params.id);
+      // this.form.dispatchEvent(new Event('submit'));
+      this.form.submit();
+      setTimeout(() => {
+        window.open('/api/invoices/pdf/' + this.props.match.params.id);
+      }, 1000);
     };
 
     const openModal = () => {
@@ -228,6 +231,15 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
       this.addProduct();
     };
 
+    const defaultInvoice: IInvoice = {
+      name: '07/07/2019',
+      number: '07/07/2019',
+      documentDate: format(new Date(), 'yyyy-MM-dd'),
+      sellDate: format(new Date(), 'yyyy-MM-dd'),
+      paymentDate: format(new Date(), 'yyyy-MM-dd'),
+      paymentDueDate: format(new Date(), 'yyyy-MM-dd')
+    };
+
     const items = products && products.map((el, index) => <InvoiceItem key={index} product={el} updateHandler={updateProducts} />);
 
     return (
@@ -254,7 +266,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
             {loading ? (
               <Loading />
             ) : (
-              <AvForm model={isNew ? {} : invoiceEntity} onSubmit={this.saveEntity}>
+              <AvForm model={isNew ? defaultInvoice : invoiceEntity} onSubmit={this.saveEntity} ref={el => (this.form = el)}>
                 {!isNew ? (
                   <AvGroup>
                     <Label for="invoice-id">ID</Label>
@@ -429,57 +441,12 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                     </AvGroup>
                   </Col>
                 </Row>
-                {/*<AvGroup>*/}
-                {/*<Label id="sellPlaceLabel" for="invoice-sellPlace">*/}
-                {/*Sell Place*/}
-                {/*</Label>*/}
-                {/*<AvField id="invoice-sellPlace" type="text" name="sellPlace" />*/}
-                {/*</AvGroup>*/}
-                {/*<AvGroup>*/}
-                {/*<Label id="bankAccountLabel" for="invoice-bankAccount">*/}
-                {/*Bank Account*/}
-                {/*</Label>*/}
-                {/*<AvField id="invoice-bankAccount" type="text" name="bankAccount"/>*/}
-                {/*</AvGroup>*/}
                 <AvGroup>
                   <Label id="notesLabel" for="invoice-notes">
                     Uwagi
                   </Label>
                   <AvInput id="invoice-notes" type="textarea" name="notes" />
                 </AvGroup>
-                {/*<AvGroup>*/}
-                {/*<Label for="invoice-product">Product</Label>*/}
-                {/*<AvInput*/}
-                {/*id="invoice-product"*/}
-                {/*type="select"*/}
-                {/*multiple*/}
-                {/*className="form-control"*/}
-                {/*name="products"*/}
-                {/*value={invoiceEntity.products && invoiceEntity.products.map(e => e.id)}*/}
-                {/*>*/}
-                {/*<option value="" key="0" />*/}
-                {/*{products*/}
-                {/*? products.map(otherEntity => (*/}
-                {/*<option value={otherEntity.id} key={otherEntity.id}>*/}
-                {/*{otherEntity.id}*/}
-                {/*</option>*/}
-                {/*))*/}
-                {/*: null}*/}
-                {/*</AvInput>*/}
-                {/*</AvGroup>*/}
-                {/*<AvGroup>*/}
-                {/*<Label for="invoice-company">Company</Label>*/}
-                {/*<AvInput id="invoice-company" type="select" className="form-control" name="company.id">*/}
-                {/*<option value="" key="0" />*/}
-                {/*{companies*/}
-                {/*? companies.map(otherEntity => (*/}
-                {/*<option value={otherEntity.id} key={otherEntity.id}>*/}
-                {/*{otherEntity.id}*/}
-                {/*</option>*/}
-                {/*))*/}
-                {/*: null}*/}
-                {/*</AvInput>*/}
-                {/*</AvGroup>*/}
                 <Button tag={Link} id="cancel-save" to="/entity/invoice" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;

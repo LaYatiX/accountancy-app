@@ -13,7 +13,7 @@ export function CompanyItem(props: { company: ICompany; match: match<{ url: stri
         <Card.Title>{props.company.companyName}</Card.Title>
         <ListGroup variant="flush">
           <ListGroup.Item>Krótka nazwa - {props.company.shortName}</ListGroup.Item>
-          <ListGroup.Item>Adres - {props.company.name}</ListGroup.Item>
+          <ListGroup.Item>Adres - {props.company.address}</ListGroup.Item>
           <ListGroup.Item>Kod pocztowy {props.company.postalCode}</ListGroup.Item>
           <ListGroup.Item>Miasto - {props.company.city}</ListGroup.Item>
           <ListGroup.Item>NIP {props.company.nIP}</ListGroup.Item>

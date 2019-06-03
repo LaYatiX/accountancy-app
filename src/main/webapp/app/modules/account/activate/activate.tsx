@@ -9,9 +9,9 @@ import { activateAction, reset } from './activate.reducer';
 
 const successAlert = (
   <Alert color="success">
-    <strong>Your user account has been activated.</strong> Please
+    <strong>Konto zostało aktywowane</strong> Proszę się
     <Link to="/login" className="alert-link">
-      sign in
+      zalogować
     </Link>
     .
   </Alert>
@@ -19,7 +19,7 @@ const successAlert = (
 
 const failureAlert = (
   <Alert color="danger">
-    <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
+    <strong>Użytkownk nie został aktywowany</strong> Proszę sprawdzić instrukcje w mailu
   </Alert>
 );
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,6 +101,20 @@ public class MonthSumUpResource {
         log.debug("REST request to get MonthSumUp : {}", id);
         Optional<MonthSumUp> monthSumUp = monthSumUpRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(monthSumUp);
+    }
+
+    /**
+     * {@code GET  /month-sum-ups/:companyId/:id} : get the "id" monthSumUp.
+     *
+     * @param companyId the id of the monthSumUp to retrieve.
+     * @param date the date of the monthSumUp to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the monthSumUp, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/month-sum-ups/{companyId}/{date}")
+    public ResponseEntity<MonthSumUp> getMonthSumUp(@PathVariable Long companyId, @PathVariable LocalDate date) {
+        log.debug("REST request to get MonthSumUp : {}", companyId);
+        Optional<MonthSumUp> monthSumUp = monthSumUpRepository.findByCompanyIdAndMonth(companyId, date);
+        return monthSumUp.map(monthSumUp1 -> ResponseEntity.ok().body(monthSumUp1)).orElseGet(() -> ResponseEntity.ok().body(null));
     }
 
     /**

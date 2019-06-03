@@ -63,16 +63,16 @@ class SideNav extends Component<IMenuItem> {
           </div>
         </Link>
 
-        <hr className="sidebar-divider my-0" />
+        {/*<hr className="sidebar-divider my-0" />*/}
 
-        <NavItem className="active">
-          <Link to={'/'} className="nav-link">
-            <StyledFontAwesomeIcon icon={faTachometerAlt} />
-            <span>Pulpit</span>
-          </Link>
-        </NavItem>
+        {/*<NavItem className="active">*/}
+        {/*<Link to={'/'} className="nav-link">*/}
+        {/*<StyledFontAwesomeIcon icon={faTachometerAlt} />*/}
+        {/*<span>Pulpit</span>*/}
+        {/*</Link>*/}
+        {/*</NavItem>*/}
 
-        <hr className="sidebar-divider" />
+        {/*<hr className="sidebar-divider" />*/}
 
         <div className="sidebar-heading">Główne opcje</div>
 

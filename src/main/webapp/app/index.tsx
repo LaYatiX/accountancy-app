@@ -10,6 +10,8 @@ import { clearAuthentication } from './shared/reducers/authentication';
 import ErrorBoundary from './shared/error/error-boundary';
 import AppComponent from './app';
 import { loadIcons } from './config/icon-loader';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const devTools = process.env.NODE_ENV === 'development' ? <DevTools /> : null;
 
@@ -28,7 +30,9 @@ const render = Component =>
       <Provider store={store}>
         <div>
           {/*{devTools}*/}
-          <Component />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Component />
+          </MuiPickersUtilsProvider>
         </div>
       </Provider>
     </ErrorBoundary>,

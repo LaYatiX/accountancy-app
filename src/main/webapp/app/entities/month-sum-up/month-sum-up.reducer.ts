@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IMonthSumUp, defaultValue } from 'app/shared/model/month-sum-up.model';
+import { format } from 'date-fns';
 
 export const ACTION_TYPES = {
   FETCH_MONTHSUMUP_LIST: 'monthSumUp/FETCH_MONTHSUMUP_LIST',
@@ -106,6 +107,15 @@ export const getEntities: ICrudGetAllAction<IMonthSumUp> = (page, size, sort) =>
 
 export const getEntity: ICrudGetAction<IMonthSumUp> = id => {
   const requestUrl = `${apiUrl}/${id}`;
+  return {
+    type: ACTION_TYPES.FETCH_MONTHSUMUP,
+    payload: axios.get<IMonthSumUp>(requestUrl)
+  };
+};
+
+export const getEntitiesCompany: any = (companyId, date) => {
+  const formatedDate = format(date, 'yyyy-MM-dd');
+  const requestUrl = `${apiUrl}/${companyId}/${formatedDate}`;
   return {
     type: ACTION_TYPES.FETCH_MONTHSUMUP,
     payload: axios.get<IMonthSumUp>(requestUrl)

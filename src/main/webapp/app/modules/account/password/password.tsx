@@ -48,8 +48,8 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
             <AvForm id="password-form" onValidSubmit={this.handleValidSubmit}>
               <AvField
                 name="currentPassword"
-                label="Current password"
-                placeholder={'Current password'}
+                label="Aktualne hasło"
+                placeholder={'Aktualne hasło'}
                 type="password"
                 validate={{
                   required: { value: true, errorMessage: 'Your password is required.' }
@@ -57,8 +57,8 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
               />
               <AvField
                 name="newPassword"
-                label="New password"
-                placeholder={'New password'}
+                label="Nowe hasło"
+                placeholder={'Nowe hasło'}
                 type="password"
                 validate={{
                   required: { value: true, errorMessage: 'Your password is required.' },
@@ -70,8 +70,8 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
               <PasswordStrengthBar password={this.state.password} />
               <AvField
                 name="confirmPassword"
-                label="New password confirmation"
-                placeholder="Confirm the new password"
+                label="Potwiedź hasło"
+                placeholder="Potwiedź hasło"
                 type="password"
                 validate={{
                   required: {
@@ -93,7 +93,7 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
                 }}
               />
               <Button color="success" type="submit">
-                Save
+                Zapisz
               </Button>
             </AvForm>
           </Col>

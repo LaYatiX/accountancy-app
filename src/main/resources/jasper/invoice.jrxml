@@ -240,7 +240,7 @@
 									<font fontName="Arial Rounded MT Bold" size="12" isBold="true"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$R{jasper.invoice.entry.quantity.label}]]></textFieldExpression>
+								<textFieldExpression><![CDATA["Ilość"]]></textFieldExpression>
 							</textField>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">

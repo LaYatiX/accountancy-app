@@ -1,6 +1,7 @@
 package pl.gpiwosz.accountancy.web.rest;
 
 import pl.gpiwosz.accountancy.domain.Expense;
+import pl.gpiwosz.accountancy.repository.EntryRepository;
 import pl.gpiwosz.accountancy.repository.ExpenseRepository;
 import pl.gpiwosz.accountancy.web.rest.errors.BadRequestAlertException;
 
@@ -34,8 +35,11 @@ public class ExpenseResource {
 
     private final ExpenseRepository expenseRepository;
 
-    public ExpenseResource(ExpenseRepository expenseRepository) {
+    private final EntryRepository entryRepository;
+
+    public ExpenseResource(ExpenseRepository expenseRepository, EntryRepository entryRepository) {
         this.expenseRepository = expenseRepository;
+        this.entryRepository = entryRepository;
     }
 
     /**
@@ -72,6 +76,10 @@ public class ExpenseResource {
         if (expense.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        expense.getEntries().forEach(s -> {
+            s.setExpense(expense);
+            entryRepository.save(s);
+        });
         Expense result = expenseRepository.save(expense);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, expense.getId().toString()))

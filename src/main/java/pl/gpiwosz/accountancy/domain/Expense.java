@@ -34,10 +34,11 @@ public class Expense implements Serializable {
 
     @OneToMany(mappedBy = "expense", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnoreProperties({"expense", "income"})
     private Set<Entry> entries = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("expenses")
+    @OneToOne
+    @JsonIgnoreProperties({"expenses", "incomes"})
     private MonthSumUp monthSumUp;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

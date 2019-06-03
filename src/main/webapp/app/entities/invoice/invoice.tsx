@@ -56,13 +56,13 @@ export class Invoice extends React.Component<IInvoiceProps, IInvoiceState> {
           Faktury
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Stwórz nową fakturę
+            &nbsp; Wprowadź fakturę do systemu
           </Link>
         </HeaderButton>
         <Form>
           <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label>Wyszukaj firmę współpracującą</Form.Label>
-            <Form.Control type="text" placeholder="Wyszukaj firmę współpracującą" onChange={searchHandler} />
+            <Form.Label>Wyszukaj fakturę</Form.Label>
+            <Form.Control type="text" placeholder="Wyszukaj fakturę" onChange={searchHandler} />
           </Form.Group>
         </Form>
 

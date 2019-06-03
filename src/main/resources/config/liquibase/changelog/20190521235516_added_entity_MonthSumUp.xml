@@ -15,6 +15,11 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+
+            <column name="month" type="date">
+                <constraints nullable="true" />
+            </column>
+
             <column name="income_sum" type="${floatType}">
                 <constraints nullable="true" />
             </column>
@@ -74,6 +79,8 @@
             <column name="fund_word" type="numeric"/>
             <column name="z_u_ssum" type="numeric"/>
             <column name="income_tax" type="numeric"/>
+            <column name="month" type="date"/>
+            <column name="company_id" type="numeric"/>
         </loadData>
     </changeSet>
 

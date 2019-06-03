@@ -3,27 +3,19 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Label, Row } from 'reactstrap';
 import { AvFeedback, AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
-
-import { createEntity, getEntity, getState, reset, updateEntity } from './company.reducer';
+import { getState, setWorkingCompany, updateEntity } from './company.reducer';
 // tslint:disable-next-line:no-unused-variable
 import { EditOrUpdate, Loading } from 'app/shared/layout/styled-components/styled';
 import { CompanyUpdateForm } from 'app/entities/company/company-update-form';
 
-export interface ICompanyUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+// tslint:disable-next-line:no-unused-variable
 
-export interface ICompanyUpdateState {
-  isNew: boolean;
-}
+export interface IWorkingCompanyProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export class CompanyUpdate extends React.Component<ICompanyUpdateProps, ICompanyUpdateState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isNew: !this.props.match.params || !this.props.match.params.id
-    };
-  }
+// export interface ICompanyUpdateState {
+// }
 
+export class WorkingCompany extends React.Component<IWorkingCompanyProps> {
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
       this.handleClose();
@@ -34,28 +26,20 @@ export class CompanyUpdate extends React.Component<ICompanyUpdateProps, ICompany
   }
 
   componentDidMount() {
-    if (this.state.isNew) {
-      // this.props.reset();
-    } else if (!this.state.isNew) {
-      this.props.getEntity(this.props.match.params.id);
-    }
+    this.props.getState();
   }
 
-  componentWillReceiveProps(nextProps: Readonly<ICompanyUpdateProps>, nextContext: any): void {}
+  componentWillReceiveProps(nextProps: Readonly<IWorkingCompanyProps>, nextContext: any): void {}
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { companyEntity } = this.props;
+      const { workingCompany } = this.props;
       const entity = {
-        ...companyEntity,
+        ...workingCompany,
         ...values
       };
-
-      if (this.state.isNew) {
-        this.props.createEntity(entity);
-      } else {
-        this.props.updateEntity(entity);
-      }
+      this.props.setWorkingCompany(workingCompany.id);
+      this.props.updateEntity(entity);
     }
   };
 
@@ -64,25 +48,20 @@ export class CompanyUpdate extends React.Component<ICompanyUpdateProps, ICompany
   };
 
   render() {
-    const { companyEntity, loading, updating } = this.props;
-    const { isNew } = this.state;
+    const { loading, updating, workingCompany } = this.props;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="accountancyApp.company.home.createOrEditLabel">
-              <EditOrUpdate isNew={isNew} /> firmę
+              <EditOrUpdate isNew={false} /> firmę
             </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
-            {loading ? (
-              <Loading />
-            ) : (
-              <CompanyUpdateForm company={isNew ? {} : companyEntity} onSubmit={this.saveEntity} disabled={updating} />
-            )}
+            {loading ? <Loading /> : <CompanyUpdateForm company={workingCompany} onSubmit={this.saveEntity} disabled={updating} />}
           </Col>
         </Row>
       </div>
@@ -91,7 +70,6 @@ export class CompanyUpdate extends React.Component<ICompanyUpdateProps, ICompany
 }
 
 const mapStateToProps = ({ company }) => ({
-  companyEntity: company.entity,
   workingCompany: company.workingCompany,
   loading: company.loading,
   updating: company.updating,
@@ -99,11 +77,9 @@ const mapStateToProps = ({ company }) => ({
 });
 
 const mapDispatchToProps = {
-  getEntity,
   updateEntity,
-  createEntity,
   getState,
-  reset
+  setWorkingCompany
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -112,4 +88,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CompanyUpdate);
+)(WorkingCompany);

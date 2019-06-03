@@ -44,7 +44,7 @@ export default () => next => action => {
           switch (response.status) {
             // connection refused, server not reachable
             case 0:
-              addErrorAlert('Server not reachable', 'error.server.not.reachable');
+              addErrorAlert('Serwer niedostępny', 'error.server.not.reachable');
               break;
 
             case 400:
@@ -81,7 +81,10 @@ export default () => next => action => {
               break;
 
             case 404:
-              addErrorAlert('Not found', 'error.url.not.found');
+              addErrorAlert('Nie znaleziono', 'error.url.not.found');
+              break;
+            case 401:
+              addErrorAlert('Błędna autoryzacja', 'error.url.not.found');
               break;
 
             default:
@@ -95,7 +98,7 @@ export default () => next => action => {
       } else if (error && error.message) {
         toast.error(error.message);
       } else {
-        toast.error('Unknown error!');
+        toast.error('Nieznany błąd');
       }
       return Promise.reject(error);
     });

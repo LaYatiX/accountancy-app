@@ -1,7 +1,9 @@
 package pl.gpiwosz.accountancy.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,7 +21,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "invoice")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,7 +35,7 @@ public class Invoice implements Serializable {
     private String name;
 
     @Column(name = "jhi_number")
-    private Long number;
+    private String number;
 
     @Column(name = "document_date")
     private LocalDate documentDate;
@@ -68,7 +70,7 @@ public class Invoice implements Serializable {
     @Column(name = "notes")
     private String notes;
 
-    @Column(name = "jhi_size", nullable = false)
+    @Column(name = "jhi_size")
     private Long size;
 
     @Column(name = "mime_type")
@@ -78,7 +80,11 @@ public class Invoice implements Serializable {
     @JoinColumn(unique = true)
     private Content content;
 
-    @ManyToMany
+    @OneToOne(mappedBy = "invoice")
+    @JsonIgnore
+    private Entry entry;
+
+    @ManyToMany(cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "invoice_product",
                joinColumns = @JoinColumn(name = "invoice_id", referencedColumnName = "id"),
@@ -115,16 +121,16 @@ public class Invoice implements Serializable {
         this.name = name;
     }
 
-    public Long getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public Invoice number(Long number) {
+    public Invoice number(String number) {
         this.number = number;
         return this;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -398,5 +404,13 @@ public class Invoice implements Serializable {
             ", size=" + getSize() +
             ", mimeType='" + getMimeType() + "'" +
             "}";
+    }
+
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
 }

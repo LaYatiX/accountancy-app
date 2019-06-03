@@ -383,16 +383,23 @@ Metrics and Health styles
 .Toastify__toast--error {
   background: $danger;
 }
-
-[class*='MuiSelect-select'] {
-  &:focus {
-    background-color: transparent !important;
+.navbar {
+  [class*='MuiSelect-select'] {
+    &:focus {
+      background-color: transparent !important;
+    }
   }
-}
-[class*='MuiInput-underline'] {
-  &:after,
-  &:before {
-    border-bottom: 0 !important;
+  [class*='MuiInput-underline'] {
+    &:after,
+    &:before {
+      border-bottom: 0 !important;
+    }
+  }
+  [class*='MuiInput-root'] {
+    z-index: 0;
+    max-width: 300px;
+    background-color: #fff;
+    padding-left: 30px;
   }
 }
 

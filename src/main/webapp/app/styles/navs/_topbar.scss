@@ -9,6 +9,8 @@
     width: 2.5rem;
     position: absolute;
     left: 1rem;
+    z-index: 1;
+    background: $white;
 
     &:hover {
       background-color: $gray-200;

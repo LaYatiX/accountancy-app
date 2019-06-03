@@ -12,8 +12,8 @@ export function InvoiceCard(props: { invoice: IInvoice; match: match<{ url: stri
       <Card.Body>
         <Card.Title>{props.invoice.name}</Card.Title>
         <ListGroup variant="flush">
-          <ListGroup.Item>Sprzedający - {props.invoice.company.companyName}</ListGroup.Item>
-          <ListGroup.Item>Kupujący - {props.invoice.contractor.companyName}</ListGroup.Item>
+          <ListGroup.Item>Sprzedający - {props.invoice.company && props.invoice.company.companyName}</ListGroup.Item>
+          <ListGroup.Item>Kupujący - {props.invoice.contractor && props.invoice.contractor.companyName}</ListGroup.Item>
           <ListGroup.Item>Ilość produktów {props.invoice.products.length}</ListGroup.Item>
           <ListGroup.Item>Łącznie netto - {props.invoice.totalNetto}</ListGroup.Item>
           <ListGroup.Item>Łącznie brutto {props.invoice.totalBrutto}</ListGroup.Item>

@@ -1,6 +1,7 @@
 package pl.gpiwosz.accountancy.web.rest;
 
 import pl.gpiwosz.accountancy.domain.Income;
+import pl.gpiwosz.accountancy.repository.EntryRepository;
 import pl.gpiwosz.accountancy.repository.IncomeRepository;
 import pl.gpiwosz.accountancy.web.rest.errors.BadRequestAlertException;
 
@@ -33,9 +34,11 @@ public class IncomeResource {
     private String applicationName;
 
     private final IncomeRepository incomeRepository;
+    private final EntryRepository entryRepository;
 
-    public IncomeResource(IncomeRepository incomeRepository) {
+    public IncomeResource(IncomeRepository incomeRepository, EntryRepository entryRepository) {
         this.incomeRepository = incomeRepository;
+        this.entryRepository = entryRepository;
     }
 
     /**
@@ -72,6 +75,10 @@ public class IncomeResource {
         if (income.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        income.getEntries().forEach(s -> {
+            s.setIncome(income);
+            entryRepository.save(s);
+        });
         Income result = incomeRepository.save(income);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, income.getId().toString()))

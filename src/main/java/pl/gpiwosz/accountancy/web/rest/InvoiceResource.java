@@ -7,7 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
+import pl.gpiwosz.accountancy.domain.Entry;
 import pl.gpiwosz.accountancy.domain.Invoice;
+import pl.gpiwosz.accountancy.repository.EntryRepository;
 import pl.gpiwosz.accountancy.repository.InvoiceRepository;
 import pl.gpiwosz.accountancy.repository.ProductRepository;
 import pl.gpiwosz.accountancy.service.InvoiceService;
@@ -26,7 +28,6 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -54,14 +55,17 @@ public class InvoiceResource {
 
     private final ProductRepository productRepository;
 
+    private final EntryRepository entryRepository;
+
     private final MailService mailService;
 
     @Autowired
     private InvoiceService invoiceService;
 
-    public InvoiceResource(InvoiceRepository invoiceRepository, ProductRepository productRepository, MailService mailService) {
+    public InvoiceResource(InvoiceRepository invoiceRepository, ProductRepository productRepository, EntryRepository entryRepository, MailService mailService) {
         this.invoiceRepository = invoiceRepository;
         this.productRepository = productRepository;
+        this.entryRepository = entryRepository;
         this.mailService = mailService;
     }
 
@@ -78,11 +82,9 @@ public class InvoiceResource {
         if (invoice.getId() != null) {
             throw new BadRequestAlertException("Taka faktura już istnieje", ENTITY_NAME, "idexists");
         }
-        invoice.getProducts().forEach(s -> {
-            s.setId(null);
-            productRepository.save(s);
-        });
-        Invoice result = invoiceRepository.save(invoice);
+
+        Invoice result = invoiceService.saveInvoice(invoice);
+
         return ResponseEntity.created(new URI("/api/invoices/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -194,7 +196,7 @@ public class InvoiceResource {
     @DeleteMapping("/invoices/{id}")
     public ResponseEntity<Void> deleteInvoice(@PathVariable Long id) {
         log.debug("REST request to delete Invoice : {}", id);
-        invoiceRepository.deleteById(id);
+        invoiceService.removeInvoice(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 }

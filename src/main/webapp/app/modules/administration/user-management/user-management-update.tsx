@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getUser, getRoles, updateUser, createUser, reset } from './user-management.reducer';
 import { IRootState } from 'app/shared/reducers';
-import { Loading } from 'app/shared/layout/styled-components/styled';
+import { EditOrUpdate, Loading } from 'app/shared/layout/styled-components/styled';
 
 export interface IUserManagementUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ login: string }> {}
 
@@ -54,7 +54,10 @@ export class UserManagementUpdate extends React.Component<IUserManagementUpdateP
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h1>Create or edit a User</h1>
+            <h1>
+              <EditOrUpdate isNew={this.state.isNew} />
+              &nbsp; użytkownika
+            </h1>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -97,7 +100,7 @@ export class UserManagementUpdate extends React.Component<IUserManagementUpdateP
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="firstName">First Name</Label>
+                  <Label for="firstName">Imię</Label>
                   <AvField
                     type="text"
                     className="form-control"
@@ -112,7 +115,7 @@ export class UserManagementUpdate extends React.Component<IUserManagementUpdateP
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="lastName">Last Name</Label>
+                  <Label for="lastName">Nazwisko</Label>
                   <AvField
                     type="text"
                     className="form-control"
@@ -125,29 +128,29 @@ export class UserManagementUpdate extends React.Component<IUserManagementUpdateP
                     }}
                     value={user.lastName}
                   />
-                  <AvFeedback>This field cannot be longer than 50 characters.</AvFeedback>
+                  <AvFeedback>Pole nie może być dłuższe niż 50 znaków</AvFeedback>
                 </AvGroup>
                 <AvGroup>
                   <AvField
                     name="email"
                     label="Email"
-                    placeholder={'Your email'}
+                    placeholder={'Twój email'}
                     type="email"
                     validate={{
                       required: {
                         value: true,
-                        errorMessage: 'Your email is required.'
+                        errorMessage: 'Email jest wymagany'
                       },
                       email: {
-                        errorMessage: 'Your email is invalid.'
+                        errorMessage: 'Nieprawidłowy mail'
                       },
                       minLength: {
                         value: 5,
-                        errorMessage: 'Your email is required to be at least 5 characters.'
+                        errorMessage: 'Mail wymaga min 5 znaków'
                       },
                       maxLength: {
                         value: 254,
-                        errorMessage: 'Your email cannot be longer than 50 characters.'
+                        errorMessage: 'Mail nie może być dłuższy niż 50 znaków'
                       }
                     }}
                     value={user.email}
@@ -155,7 +158,7 @@ export class UserManagementUpdate extends React.Component<IUserManagementUpdateP
                 </AvGroup>
                 <AvGroup check>
                   <Label>
-                    <AvInput type="checkbox" name="activated" value={user.activated} /> Activated
+                    <AvInput type="checkbox" name="activated" value={user.activated} /> Aktywowano
                   </Label>
                 </AvGroup>
                 <AvGroup>
@@ -171,12 +174,12 @@ export class UserManagementUpdate extends React.Component<IUserManagementUpdateP
                 <Button tag={Link} to="/admin/user-management" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Wróć</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" type="submit" disabled={isInvalid || updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Zapisz
                 </Button>
               </AvForm>
             )}

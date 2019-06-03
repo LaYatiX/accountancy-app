@@ -23,6 +23,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="invoice_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="expense_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -53,6 +57,8 @@
             <column name="id" type="numeric"/>
             <column name="amount" type="numeric"/>
             <column name="description" type="string"/>
+            <column name="invoice_id" type="numeric"/>
+            <column name="income_id" type="numeric"/>
         </loadData>
     </changeSet>
 

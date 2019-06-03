@@ -7,6 +7,11 @@ export const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   margin: 0 10px;
   color: rgba(255, 255, 255, 0.8);
 `;
+
+export const PointerIcon = styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;
+
 export const MenuRightFontAwesomeIcon = styled(FontAwesomeIcon)`
   display: none;
   margin: 0 10px;
@@ -20,6 +25,11 @@ export const MenuRightFontAwesomeIcon = styled(FontAwesomeIcon)`
 
 export const Flex = styled.div`
   display: flex;
+`;
+
+export const InlineFlex = styled.div`
+  display: inline-flex;
+  align-items: center;
 `;
 export const FlexCommon = styled(Flex)`
   flex-wrap: wrap;
@@ -37,6 +47,10 @@ export const VerticalSpacer = styled.div`
 
 export const SpaceBetweenFlex = styled(Flex)`
   justify-content: space-between;
+`;
+
+export const SpaceBetweenCenter = styled(SpaceBetweenFlex)`
+  align-items: center;
 `;
 
 export const CursorPointer = styled.div`

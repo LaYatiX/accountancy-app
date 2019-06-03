@@ -20,5 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="income"/>
 
+        <addForeignKeyConstraint baseColumnNames="invoice_id"
+                                 baseTableName="entry"
+                                 constraintName="fk_entry_invoice_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice"/>
+
     </changeSet>
 </databaseChangeLog>

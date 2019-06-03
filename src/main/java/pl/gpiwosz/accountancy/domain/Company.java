@@ -2,6 +2,7 @@ package pl.gpiwosz.accountancy.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -16,7 +17,7 @@ import java.util.Objects;
  * A Company.
  */
 @Entity
-@Table(name = "invoice")
+@Table(name = "company")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Company implements Serializable {
 
@@ -72,11 +73,12 @@ public class Company implements Serializable {
     @Column(name = "is_zu_spayer")
     private Boolean isZUSpayer;
 
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "company")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnoreProperties("company")
     private Set<MonthSumUp> monthSumUps = new HashSet<>();
 
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "company")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Invoice> senders = new HashSet<>();
 

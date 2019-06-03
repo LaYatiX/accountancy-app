@@ -93,7 +93,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
 
           <div className="topbar-divider d-none d-sm-block" />
 
-          {isAuthenticated && <EntitiesMenu />}
+          {/*{isAuthenticated && <EntitiesMenu />}*/}
           {isAuthenticated && isAdmin && <AdminMenu showSwagger={isSwaggerEnabled} />}
           <AccountMenu isAuthenticated={isAuthenticated} isAdmin={isAdmin} user={user} />
         </Nav>

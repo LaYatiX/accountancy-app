@@ -40,15 +40,15 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="settings-title">User settings for {account.login}</h2>
+            <h2 id="settings-title">Ustawienia użytkownika dla: {account.login}</h2>
             <AvForm id="settings-form" onValidSubmit={this.handleValidSubmit}>
               {/* First name */}
               <AvField
                 className="form-control"
                 name="firstName"
-                label="First Name"
+                label="Imię"
                 id="firstName"
-                placeholder="Your first name"
+                placeholder="Twoje imię"
                 validate={{
                   required: { value: true, errorMessage: 'Your first name is required.' },
                   minLength: { value: 1, errorMessage: 'Your first name is required to be at least 1 character' },
@@ -60,9 +60,9 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
               <AvField
                 className="form-control"
                 name="lastName"
-                label="Last Name"
+                label="Nazwisko"
                 id="lastName"
-                placeholder="Your last name"
+                placeholder="Twoje nazwisko"
                 validate={{
                   required: { value: true, errorMessage: 'Your last name is required.' },
                   minLength: { value: 1, errorMessage: 'Your last name is required to be at least 1 character' },
@@ -84,7 +84,7 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                 value={account.email}
               />
               <Button color="primary" type="submit">
-                Save
+                Zapisz
               </Button>
             </AvForm>
           </Col>

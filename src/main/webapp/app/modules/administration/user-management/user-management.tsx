@@ -63,7 +63,7 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
     return (
       <div>
         <h2 id="user-management-page-heading">
-          Users
+          Użytkownicy
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity">
             <FontAwesomeIcon icon="plus" /> Create a new user
           </Link>
@@ -84,17 +84,17 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
                 <FontAwesomeIcon icon="sort" />
               </th>
               <th />
-              <th>Profiles</th>
+              <th>Profile</th>
               <th className="hand" onClick={this.sort('createdDate')}>
-                Created Date
+                Data utworzenia
                 <FontAwesomeIcon icon="sort" />
               </th>
               <th className="hand" onClick={this.sort('lastModifiedBy')}>
-                Last Modified By
+                Ostanio zmodyfikiwano przez
                 <FontAwesomeIcon icon="sort" />
               </th>
               <th id="modified-date-sort" className="hand" onClick={this.sort('lastModifiedDate')}>
-                Last Modified Date
+                Ostatnia data modyfikacji
                 <FontAwesomeIcon icon="sort" />
               </th>
               <th />
@@ -113,11 +113,11 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
                 <td>
                   {user.activated ? (
                     <Button color="success" onClick={this.toggleActive(user)}>
-                      Activated
+                      Aktywowany
                     </Button>
                   ) : (
                     <Button color="danger" onClick={this.toggleActive(user)}>
-                      Deactivated
+                      Nieaktywny
                     </Button>
                   )}
                 </td>
@@ -140,10 +140,10 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
                 <td className="text-right">
                   <div className="btn-group flex-btn-group-container">
                     <Button tag={Link} to={`${match.url}/${user.login}`} color="info" size="sm">
-                      <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                      <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Widok</span>
                     </Button>
                     <Button tag={Link} to={`${match.url}/${user.login}/edit`} color="primary" size="sm">
-                      <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                      <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edycja</span>
                     </Button>
                     <Button
                       tag={Link}
@@ -152,7 +152,7 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
                       size="sm"
                       disabled={account.login === user.login}
                     >
-                      <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                      <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Usuń</span>
                     </Button>
                   </div>
                 </td>

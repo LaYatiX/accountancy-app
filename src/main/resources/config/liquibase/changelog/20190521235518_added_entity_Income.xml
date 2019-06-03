@@ -44,6 +44,7 @@
                   context="dev">
             <column name="id" type="numeric"/>
             <column name="jhi_date" type="date"/>
+            <column name="month_sum_up_id" type="numeric"/>
         </loadData>
     </changeSet>
 

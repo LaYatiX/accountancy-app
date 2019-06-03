@@ -52,7 +52,7 @@ export class Company extends React.Component<ICompanyProps, ICompanyState> {
     return (
       <div>
         <HeaderButton id="company-heading">
-          Companies
+          Firmy
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
             &nbsp; Dodaj nową firmę współracującą

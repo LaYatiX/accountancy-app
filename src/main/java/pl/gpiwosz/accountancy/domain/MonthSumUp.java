@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -27,6 +28,8 @@ public class MonthSumUp implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
+
+    private LocalDate month;
 
     @Column(name = "income_sum")
     private Float incomeSum;
@@ -49,16 +52,17 @@ public class MonthSumUp implements Serializable {
     @Column(name = "income_tax")
     private Float incomeTax;
 
-    @OneToMany(mappedBy = "monthSumUp")
+    @OneToOne(mappedBy = "monthSumUp", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Expense> expenses = new HashSet<>();
+    @JsonIgnoreProperties("monthSumUp")
+    private Expense expenses;
 
-    @OneToMany(mappedBy = "monthSumUp")
+    @OneToOne(mappedBy = "monthSumUp", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Income> incomes = new HashSet<>();
+    @JsonIgnoreProperties("monthSumUp")
+    private Income incomes;
 
     @ManyToOne
-    @JsonIgnoreProperties("monthSumUps")
     private Company company;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -161,53 +165,29 @@ public class MonthSumUp implements Serializable {
         this.incomeTax = incomeTax;
     }
 
-    public Set<Expense> getExpenses() {
+    public Expense getExpenses() {
         return expenses;
     }
 
-    public MonthSumUp expenses(Set<Expense> expenses) {
+    public MonthSumUp expenses(Expense expenses) {
         this.expenses = expenses;
         return this;
     }
 
-    public MonthSumUp addExpense(Expense expense) {
-        this.expenses.add(expense);
-        expense.setMonthSumUp(this);
-        return this;
-    }
-
-    public MonthSumUp removeExpense(Expense expense) {
-        this.expenses.remove(expense);
-        expense.setMonthSumUp(null);
-        return this;
-    }
-
-    public void setExpenses(Set<Expense> expenses) {
+    public void setExpenses(Expense expenses) {
         this.expenses = expenses;
     }
 
-    public Set<Income> getIncomes() {
+    public Income getIncomes() {
         return incomes;
     }
 
-    public MonthSumUp incomes(Set<Income> incomes) {
+    public MonthSumUp incomes(Income incomes) {
         this.incomes = incomes;
         return this;
     }
 
-    public MonthSumUp addIncome(Income income) {
-        this.incomes.add(income);
-        income.setMonthSumUp(this);
-        return this;
-    }
-
-    public MonthSumUp removeIncome(Income income) {
-        this.incomes.remove(income);
-        income.setMonthSumUp(null);
-        return this;
-    }
-
-    public void setIncomes(Set<Income> incomes) {
+    public void setIncomes(Income incomes) {
         this.incomes = incomes;
     }
 
@@ -253,5 +233,13 @@ public class MonthSumUp implements Serializable {
             ", zUSsum=" + getzUSsum() +
             ", incomeTax=" + getIncomeTax() +
             "}";
+    }
+
+    public LocalDate getMonth() {
+        return month;
+    }
+
+    public void setMonth(LocalDate month) {
+        this.month = month;
     }
 }

@@ -4,6 +4,7 @@ package pl.gpiwosz.accountancy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.engine.spi.CascadingAction;
 
 import javax.persistence.*;
 
@@ -42,7 +43,7 @@ public class Product implements Serializable {
     @Column(name = "price_brutto", precision=10, scale=2)
     private Float priceBrutto;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
     private Set<Invoice> invoices = new HashSet<>();

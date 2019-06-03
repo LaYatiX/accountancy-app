@@ -19,7 +19,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="jhi_number" type="bigint">
+            <column name="jhi_number" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -68,7 +68,7 @@
             </column>
 
             <column name="jhi_size" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="mime_type" type="varchar(255)">
@@ -106,7 +106,7 @@
                   context="dev">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="jhi_number" type="numeric"/>
+            <column name="jhi_number" type="string"/>
             <column name="document_date" type="date"/>
             <column name="sell_place" type="string"/>
             <column name="sell_date" type="date"/>
@@ -120,6 +120,8 @@
             <column name="notes" type="string"/>
             <column name="jhi_size" type="numeric"/>
             <column name="mime_type" type="string"/>
+            <column name="company_id" type="numeric"/>
+            <column name="contractor_id" type="numeric"/>
         </loadData>
     </changeSet>
 

@@ -39,8 +39,8 @@ export class PasswordResetFinishPage extends React.Component<IPasswordResetFinis
       <AvForm onValidSubmit={this.handleValidSubmit}>
         <AvField
           name="newPassword"
-          label="New password"
-          placeholder={'New password'}
+          label="Nowe hasło"
+          placeholder={'Nowe hasło'}
           type="password"
           validate={{
             required: { value: true, errorMessage: 'Your password is required.' },
@@ -52,8 +52,8 @@ export class PasswordResetFinishPage extends React.Component<IPasswordResetFinis
         <PasswordStrengthBar password={this.state.password} />
         <AvField
           name="confirmPassword"
-          label="New password confirmation"
-          placeholder="Confirm the new password"
+          label="Potwierdź hasło"
+          placeholder="Potwiedź hasło"
           type="password"
           validate={{
             required: { value: true, errorMessage: 'Your confirmation password is required.' },
@@ -63,7 +63,7 @@ export class PasswordResetFinishPage extends React.Component<IPasswordResetFinis
           }}
         />
         <Button color="success" type="submit">
-          Validate new password
+          Zapisz
         </Button>
       </AvForm>
     );

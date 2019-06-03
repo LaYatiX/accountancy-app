@@ -2,6 +2,7 @@ package pl.gpiwosz.accountancy.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -30,6 +31,9 @@ public class Entry implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    @OneToOne
+    private Invoice invoice;
 
     @ManyToOne
     @JsonIgnoreProperties("entries")
@@ -68,6 +72,14 @@ public class Entry implements Serializable {
     public Entry description(String description) {
         this.description = description;
         return this;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     public void setDescription(String description) {

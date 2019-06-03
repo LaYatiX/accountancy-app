@@ -1,0 +1,63 @@
+{
+    "name": "MonthSumUp",
+    "fields": [
+        {
+            "fieldName": "incomeSum",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "expenseSum",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "socialInsurance",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "healthContribution",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "fundWord",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "zUSsum",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "incomeTax",
+            "fieldType": "Float"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "expense",
+            "otherEntityRelationshipName": "monthSumUp",
+            "relationshipName": "expense"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "income",
+            "otherEntityRelationshipName": "monthSumUp",
+            "relationshipName": "income"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "company",
+            "otherEntityRelationshipName": "monthSumUp",
+            "relationshipName": "company",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190521235516",
+    "entityTableName": "month_sum_up",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

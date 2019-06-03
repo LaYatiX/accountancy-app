@@ -1,0 +1,38 @@
+{
+    "name": "Entry",
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "expense",
+            "otherEntityRelationshipName": "entry",
+            "relationshipName": "expense",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "income",
+            "otherEntityRelationshipName": "entry",
+            "relationshipName": "income",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190521235519",
+    "entityTableName": "entry",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

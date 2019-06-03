@@ -1,0 +1,33 @@
+{
+    "name": "Income",
+    "fields": [
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "entry",
+            "otherEntityRelationshipName": "income",
+            "relationshipName": "entry"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "monthSumUp",
+            "otherEntityRelationshipName": "income",
+            "relationshipName": "monthSumUp",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190521235518",
+    "entityTableName": "income",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

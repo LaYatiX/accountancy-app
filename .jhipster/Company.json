@@ -1,0 +1,88 @@
+{
+    "name": "Company",
+    "fields": [
+        {
+            "fieldName": "companyName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shortName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "surname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "postalCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nIP",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "formOfTaxation",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vATpayer",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "zUSeasyStart",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "zUSmall",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "zUSdisease",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "isZUSpayer",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "monthSumUp",
+            "otherEntityRelationshipName": "company",
+            "relationshipName": "monthSumUp"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "invoice",
+            "otherEntityRelationshipName": "company",
+            "relationshipName": "sender"
+        }
+    ],
+    "changelogDate": "20190521235520",
+    "entityTableName": "company",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

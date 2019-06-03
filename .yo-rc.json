@@ -24,9 +24,7 @@
     "testFrameworks": [],
     "enableTranslation": false,
     "nativeLanguage": "en",
-    "languages": [
-      "en"
-    ],
+    "languages": ["en"],
     "clientFramework": "react",
     "jhiPrefix": "jhi",
     "jhipsterVersion": "6.0.1",
@@ -34,7 +32,17 @@
     "clientTheme": "none",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
-    "otherModules": []
+    "otherModules": [],
+    "herokuAppName": "accountancy-app",
+    "herokuDeployType": "git",
+    "appsFolders": ["accountancy-app"],
+    "directoryPath": "../",
+    "monitoring": "no",
+    "dockerRepositoryName": "",
+    "dockerPushCommand": "docker push",
+    "openshiftNamespace": "default",
+    "storageType": "persistent",
+    "registryReplicas": 2
   },
   "git-provider": "GitHub",
   "git-company": "LaYatiX",

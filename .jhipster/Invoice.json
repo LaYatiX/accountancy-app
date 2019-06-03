@@ -1,0 +1,112 @@
+{
+    "name": "Invoice",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "number",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "documentDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "sellPlace",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sellDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "bankAccount",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "totalNetto",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "totalVat",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "totalBrutto",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "paymentType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "paymentDueDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "notes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "size",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "mimeType",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "content",
+            "otherEntityRelationshipName": "invoice",
+            "relationshipName": "content",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "product",
+            "otherEntityRelationshipName": "invoice",
+            "relationshipName": "product",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "company",
+            "otherEntityRelationshipName": "sender",
+            "relationshipName": "company",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "contractor",
+            "otherEntityRelationshipName": "receiver",
+            "relationshipName": "contractor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190521235514",
+    "entityTableName": "invoice",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
